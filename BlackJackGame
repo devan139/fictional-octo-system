@@ -1,0 +1,106 @@
+from art import logo
+
+import random
+from replit import clear
+'''import tkinter as tk
+
+window = tk.Tk()
+window.title("Blackjack Game")'''
+
+
+
+
+def deal_card():
+  cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+  return random.choice(cards)
+
+def calculate_score(cards):
+  """take a list of cards and return a score based on the cards"""
+  if sum(cards)==21 and len(cards)==2:
+    return 0
+  if 11 in cards and sum(cards)>21:
+    cards.remove(11)
+    cards.append(1)
+  return sum(cards)
+
+
+def compare(playerscore,dealerscore):
+  if playerscore>21 and dealerscore>21:
+    return "Bust. You lose."
+
+  if playerscore==dealerscore:
+    return "Push"
+  elif playerscore==0:
+    return "Blackjack. You win."
+  elif dealerscore==0:
+    return "Blackjack. Dealer Wins."
+  elif playerscore>21:
+    return "Bust. Dealer wins."
+  elif dealerscore>21:
+    return "Bust. Player wins."
+  elif playerscore>dealerscore:
+    return "Player wins."
+  else:
+    return "Dealer wins."
+
+'''def handle_hit():
+  print("y\n")
+def handle_stand():
+  print("n")'''
+
+
+def play_game():
+  print(logo)
+  player=[]
+  dealer=[]
+  
+  for _ in range(2):
+    dealer.append(deal_card())
+    player.append(deal_card())
+
+  isgameover=False
+  
+  while not isgameover:
+    
+    playerscore=calculate_score(player)
+    dealerscore=calculate_score(dealer)
+    print(f"Your Cards: {player}. Your score: {playerscore}")
+    print(f"Dealer's first card: {dealer[0]} \n")
+
+    if playerscore==0 or dealerscore==0 or playerscore>21:
+      isgameover=True
+    else:
+
+      '''hitbutton=tk.Button(window, text="Hit", command= handle_hit)
+      hitbutton.pack()
+      stand_button = tk.Button(window, text="Stand", command=handle_stand)
+      stand_button.pack()'''
+      
+      if input("\ny-> Hit \tn-> Stand  :")=="y":
+        player.append(deal_card())
+        clear()
+      else:
+        isgameover=True
+
+  while dealerscore<17 and dealerscore!=0:
+    dealer.append(deal_card())
+    dealerscore=calculate_score(dealer)
+
+  print(f"  Your final Hand: {player}  Final Score: {playerscore}")
+  print(f"  Dealer's final card: {dealer}  Final score: {dealerscore}\n")
+  print(compare(playerscore,dealerscore))
+
+'''hitbutton=tk.Button(window, text="Hit", command= handle_hit)
+hitbutton.pack()'''
+
+
+while input("\n\nDo you want to play BlackJack? ")=="y":
+  clear()
+  play_game()
+  
+  '''button = tk.Button(window, text="Compare", command=play_game)
+  button.pack()'''
+
+  
+  
+
